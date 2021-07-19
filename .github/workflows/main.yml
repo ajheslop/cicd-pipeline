@@ -74,6 +74,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
           AWS_SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
-	
-      - name: job stats
-        run: echo "this jobs status is ${{ job.status }}."
