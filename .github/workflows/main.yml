@@ -31,11 +31,10 @@ jobs:
         # stop the build if there are any flake8 issues
         # exit-zero treats all errors as warnings. the github editor is 127 chars wide
         flake8 .
-      - name: Unit Tests
+       # Runs unit tests
+      - name: Run unit tests
         run: |
-          # run unittest
-          python -m unittest "unit_tests.py"
-
+          python -m unittest
     package-and-deploy:
 
     runs-on: ubuntu-latest
