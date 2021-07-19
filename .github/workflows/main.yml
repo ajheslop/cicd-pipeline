@@ -1,0 +1,72 @@
+name: Python Pipeline
+
+on: [push]
+
+# Each job depends on the previous one - the code should not be packaged unless valid
+jobs:
+  # Run unit tests and static security scanning - the "most important" jobs
+  test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # runs a single command using the runners shell
+      - name: test the python script python_lambda.py
+        run: python lambda_function.py
+
+
+      # Installs dependencies for script
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # this should return exit code 1 if requirements is missing
+          pip install flake8
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: lint with flake8
+        run: |
+        # stop the build if there are any flake8 issues
+        # exit-zero treats all errors as warnings. the github editor is 127 chars wide
+        flake8 .
+      - name: Unit Tests
+        run: |
+          # run unittest
+          python -m unittest "unit_tests.py"
+
+    package-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: list files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: Create artifact directory
+        run: |
+          mkdir -p ./artifacts/${{ github.repository }}
+      - name: Create zip file
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -qq -r package.zip lambda_function.py
+      - name: Move zip file to artifact directory
+        run: mv package.zip ./artifacts
+      - name: list files in the artifacts directory
+        run: |
+          cd ./artifacts && ls
+      
+      - name: push zip file to s3 bucket
+        uses: jakejarvis/s3-sync-action@v0.3.1
+        env:
+          SOURCE_DIR: './artifacts/.'
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
+
+      - name: job stats
+        run: echo "this jobs status is ${{ job.status }}."
