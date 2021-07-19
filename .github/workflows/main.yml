@@ -26,44 +26,54 @@ jobs:
           # this should return exit code 1 if requirements is missing
           pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: lint with flake8
-        run: |
-        # stop the build if there are any flake8 issues
-        # exit-zero treats all errors as warnings. the github editor is 127 chars wide
-      - name: Run unit tests
-        run: |
-          python -m unittest
-  package-and-deploy:
-
+# run code quality checks in parallel
+  lint:
     runs-on: ubuntu-latest
-
+    
     steps:
       - uses: actions/checkout@v2
-      - name: list files in the repository
+      
+      - name: Install dependencies
         run: |
-          ls ${{ github.workspace }}
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run linting checks
+        run: |
+          flake8 .
+          # finds files in current folder and passes to pylint (pylint usually needs __init__.py)
+          # ignores:
+          # unused context (as this is required for aws)
+          # generic exception (as handling is intentionally limited to generic return)
+          # too many args (required for mocks)
+          find . -iname "*.py" -maxdepth 1 | xargs pylint --fail-under=8 --disable="R0913, W0613, W0703"
+    
+  # package and deploy only if the testing and linting has been successful
+  package-and-deploy:
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
       - name: Create artifact directory
         run: |
           mkdir -p ./artifacts/${{ github.repository }}
       - name: Create zip file
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -qq -r package.zip lambda_function.py
+          args: zip -qq -r package.zip update_user.py
       - name: Move zip file to artifact directory
         run: mv package.zip ./artifacts
-      - name: list files in the artifacts directory
-        run: |
-          cd ./artifacts && ls
-      
-      - name: push zip file to s3 bucket
+      - name: Upload artifact to S3
         uses: jakejarvis/s3-sync-action@v0.3.1
         env:
           SOURCE_DIR: './artifacts/.'
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
           AWS_SESSION_TOKEN: ${{ secrets.SESSION_TOKEN }}
-
+	
       - name: job stats
         run: echo "this jobs status is ${{ job.status }}."
