@@ -47,7 +47,7 @@ def lambda_handler(event, context):
 
         # rows in csv are split by lines
 
-            print add_to_db
+            print (add_to_db)
             print 'sucessfully added the records to the dynamodb table'
     except Exception, e:
         print str(e)
