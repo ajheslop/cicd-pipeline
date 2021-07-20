@@ -15,7 +15,8 @@ jobs:
       - uses: actions/checkout@v2
 
     # Installs dependencies for script
-      - name: Install dependencies
+    dependencies:
+        runs-on: ubuntu-latest
         run: |
           python -m pip install --upgrade pip
           # this should return exit code 1 if requirements is missing
