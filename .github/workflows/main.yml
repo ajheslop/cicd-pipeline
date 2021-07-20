@@ -21,7 +21,9 @@ jobs:
           # this should return exit code 1 if requirements is missing
           pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: test the python script "lambda_function.py"
+          
+        # runs a single command using the runners shell
+          - name: test the python script "lambda_function.py"
         run: python lambda_function.py
 
 
