@@ -4,7 +4,7 @@ import boto3
 
 
 def lambda_handler(event, context):
-    region = 'us-east-1'
+    region = 'eu-west-2'
     record_list = []
 
     try:
