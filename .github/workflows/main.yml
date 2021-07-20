@@ -52,7 +52,7 @@ jobs:
 
     
   # package and deploy only if the testing and linting has been successful
-  package-and-deploy:
+  Zip-Package-To-S3:
     needs: [Test-Python-Script, Linting]
     runs-on: ubuntu-latest
     
