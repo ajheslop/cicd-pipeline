@@ -30,17 +30,17 @@ def lambda_handler(event, context):
             student_grade = row[8]
 
             add_to_db = dynamodb.put_item(
-                TableName = 'students',
-                Item = {
-                    'student_id' : {'S' : str(student_id)},
-                    'student_fname' : {'S' : str(student_fname)},
-                    'student_lname' : {'S' : str(student_lname)},
-                    'student_dob' : {'S' : str(student_dob)},
-                    'student_sex' : {'S' : str(student_sex)},
-                    'student_form' : {'S' : str(student_form)},
-                    'student_year' : {'S' : str(student_year)},
-                    'student_email' : {'S' : str(student_email)},
-                    'student_grade' : {'S ': str(student_grade)},
+                TableName='students',
+                Item={
+                    'student_id': {'S': str(student_id)},
+                    'student_fname': {'S': str(student_fname)},
+                    'student_lname': {'S': str(student_lname)},
+                    'student_dob': {'S': str(student_dob)},
+                    'student_sex': {'S': str(student_sex)},
+                    'student_form': {'S': str(student_form)},
+                    'student_year': {'S': str(student_year)},
+                    'student_email': {'S': str(student_email)},
+                    'student_grade': {'S': str(student_grade)},
                 })
         # rows in csv are split by lines
             print(add_to_db)
