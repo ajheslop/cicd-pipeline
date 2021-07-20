@@ -30,6 +30,7 @@ jobs:
       
 # run code quality checks in parallel
   lint:
+    needs: [test]
     runs-on: ubuntu-latest
     
     steps:
