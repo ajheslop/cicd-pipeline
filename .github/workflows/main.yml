@@ -26,16 +26,6 @@ jobs:
           # this should return exit code 1 if requirements is missing
           pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    '''
-      - name: lint with flake8
-        run: |
-         # stop the build if there are any flake 8 issues
-         # exit-zero treats all errors as warnings. The github editor is 127 chars wide
-         flake8 .
-    '''
-
-
-
 # run code quality checks in parallel
   lint:
     runs-on: ubuntu-latest
