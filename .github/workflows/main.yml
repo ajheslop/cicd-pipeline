@@ -5,7 +5,7 @@ on: [push]
 # Each job depends on the previous one - the code should not be packaged unless valid
 jobs:
   # Run unit tests and static security scanning - the "most important" jobs
-  Test Python Script:
+  Test-Python-Script:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
