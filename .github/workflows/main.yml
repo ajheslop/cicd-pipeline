@@ -25,6 +25,7 @@ jobs:
           python -m pip install --upgrade pip
           # this should return exit code 1 if requirements is missing
           pip install flake8
+          pip install boto3
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 # run code quality checks in parallel
   lint:
