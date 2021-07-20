@@ -9,14 +9,12 @@ def lambda_handler(event, context):
 
     try:
         s3 = boto3.client('s3')
-        dynamodb = boto3.client('dynamodb',region_name=region)
+        dynamodb = boto3.client('dynamodb', region_name=region)
 
         bucket = event['Records'][0]['s3']['bucket']['name']
         key = event['Records'][0]['s3']['object']['key']
 
-        # print('bucket:', bucket, ' Key :', key)
-
-        csv_file = s3.get_object(Bucket=bucket,Key=key)
+        csv_file = s3.get_object(Bucket=bucket, Key=key)
         record_list = csv_file['Body'].read().decode('utf-8').split('\n')
         csv_reader = csv.reader(record_list, delimiter=',', quotechar='"')
 
@@ -45,6 +43,7 @@ def lambda_handler(event, context):
                     'student_grade' : {'S':str(student_grade)},
                 })
         # rows in csv are split by lines
+            print(add_to_db)
             print('sucessfully added the records to the dynamodb table')
     except Exception as e:
             print(str(e))
