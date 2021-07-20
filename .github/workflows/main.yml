@@ -22,14 +22,14 @@ jobs:
           pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           
-      # runs a single command using the runners shell
+          # runs a single command using the runners shell
       - name: test the python script "lambda_function.py"
         run: python lambda_function.py
 
 
       
 # run code quality checks in parallel
-  lint:
+  Lint main.yml:
     needs: [test, Install Dependencies]
     runs-on: ubuntu-latest
     
