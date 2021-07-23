@@ -1,4 +1,6 @@
 """Add two numbers"""
+
+
 class Calculator:
 
     def add(self, num1, num2):
