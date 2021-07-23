@@ -1,7 +1,7 @@
 """ Simple python function for testing out GitHub CI process """
 import unittest
 
-from library.person import Person
+from lambda_function import Person
 
 
 class TestAllowedToBuyAlcohol(unittest.TestCase):
