@@ -4,7 +4,7 @@ from lambda_function import Calculator
 
 
 class Tests(unittest.TestCase):
-    """Add two numbers"""
+"""Add two numbers"""
 
     def setUp(self):
         self.calculator = Calculator()
