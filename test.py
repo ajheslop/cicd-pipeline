@@ -1,6 +1,6 @@
 """ basic test for GitHub CI process"""
 import unittest
-from main import basic_function
+from lambda_function import basic_function
 
 
 class TestStringMethod(unittest.TestCase):
