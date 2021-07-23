@@ -27,7 +27,7 @@ jobs:
         run: python lambda_function.py
       
 # run code quality checks in parallel
-  Lint-maint.yml:
+  lint-main.yml:
     needs: [Test-Python-Script]
     runs-on: ubuntu-latest
     
