@@ -5,7 +5,7 @@ class Calculator:
 
     def add(self, num1, num2):
         """Add two numbers"""
-        return self.num1 + self.num2
+        return num1 + num2
 
     def subtract(self, num1, num2):
         """Add two numbers"""
