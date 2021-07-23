@@ -1,21 +1,18 @@
-""" Simple python function for testing out GitHub CI process """
+""" basic test for GitHub CI process"""
 import unittest
+from main import basic_function
 
-from lambda_function import Person
 
+class TestStringMethod(unittest.TestCase):
+    """ basic test"""
 
-class TestAllowedToBuyAlcohol(unittest.TestCase):
-    def setUp(self) -> None:
-        self.__person = Person()
+    def test_basic_function_fails(self):
+        """ fail test"""
+        self.assertNotEqual(basic_function(), "")
 
-    def tearDown(self) -> None:
-        del self.__person
-
-    def test_age_are_to_low_to_buy(self):
-        self.assertEqual(True, self.__person.allowed_to_buy_alcohol('', 4.6))
-
-    def test_age_its_allowed_to_buy(self):
-        self.assertEqual(True, self.__person.allowed_to_buy_alcohol('', 46.6))
+    def test_basic_function_pass(self):
+        """ pass test"""
+        self.assertEqual(basic_function(), "hello world")
 
 
 if __name__ == '__main__':
