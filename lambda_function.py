@@ -1,5 +1,6 @@
 """Add two numbers"""
 
+
 class Person:
     def allowed_to_buy_alcohol(self, birthday, alcohol_percentage):
         # age 16-18: < 16.5%
