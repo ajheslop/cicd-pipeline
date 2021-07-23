@@ -2,8 +2,8 @@
 
 
 class Calculator:
-
-    def add(self, num1, num2):
+"""return string"""
+    def add(num1, num2):
         """return string"""
         return num1 + num2
 
