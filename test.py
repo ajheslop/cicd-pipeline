@@ -1,53 +1,22 @@
-"""Add two numbers"""
+""" Simple python function for testing out GitHub CI process """
 import unittest
-from lambda_function import Calculator
+
+from library.person import Person
 
 
-class Tests(unittest.TestCase):
-    """Add two numbers"""
+class TestAllowedToBuyAlcohol(unittest.TestCase):
+    def setUp(self) -> None:
+        self.__person = Person()
 
-    def setUp(self):
-        self.calculator = Calculator()
+    def tearDown(self) -> None:
+        del self.__person
 
-    def test_calculator_object(self):
-        self.assertIsInstance(self.calculator, Calculator)
+    def test_age_are_to_low_to_buy(self):
+        self.assertEqual(True, self.__person.allowed_to_buy_alcohol('', 4.6))
 
-    def test_add_function_exists(self):
-        self.calculator.add
-
-    def test_add_two_numbers(self):
-        result = self.calculator.add(10, 2)
-        expected = 12
-
-        self.assertEqual(result, expected)
-
-    def test_subtract_function_exists(self):
-        self.calculator.subtract
-
-    def test_subtract_two_numbers(self):
-        result = self.calculator.subtract(10, 2)
-        expected = 8
-
-        self.assertEqual(result, expected)
-
-    def test_divide_function_exists(self):
-        self.calculator.divide
-
-    def test_divide_two_numbers(self):
-        result = self.calculator.divide(10, 2)
-        expected = 5
-
-        self.assertEqual(result, expected)
-
-    def test_multiply_function_exists(self):
-        self.calculator.multiply
-
-    def test_multiply_two_numbers(self):
-        result = self.calculator.multiply(10, 2)
-        expected = 20
-
-        self.assertEqual(result, expected)
+    def test_age_its_allowed_to_buy(self):
+        self.assertEqual(True, self.__person.allowed_to_buy_alcohol('', 46.6))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
