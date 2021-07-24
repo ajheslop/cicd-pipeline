@@ -13,7 +13,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
+      - name: Set environment variables  
+        run: |  
+          echo "AWS Access Key ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+          echo "AWS Region=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV  
+          echo "AWS S3 Bucket=${{ secrets.AWS_S3_BUCKET }}" >> $GITHUB_ENV
+          echo "AWS Secret Access Key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV  
+   
     # Installs dependencies for script
       - name: Install dependencies
         run: |
