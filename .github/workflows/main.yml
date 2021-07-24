@@ -93,3 +93,21 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+# Test Reports
+  Test Report:
+    needs: [Zip-Package-To-S3]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: 'Publish Test Report'  
+        if: always() 
+        uses: actions/upload-artifact@v2  
+        with:  
+            name: 'test-reports'  
+            path: |  
+              target/*.html  
+              target/site/  
+              ./anchore-reports/
