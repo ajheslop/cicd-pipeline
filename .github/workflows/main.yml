@@ -95,7 +95,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 # Test Reports
-  Test Report:
+  Test-Report:
     needs: [Zip-Package-To-S3]
     runs-on: ubuntu-latest
     
