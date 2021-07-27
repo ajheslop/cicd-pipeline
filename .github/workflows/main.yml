@@ -54,7 +54,7 @@ jobs:
           # generic exception (as handling is intentionally limited to generic return)
           # too many args (required for mocks)
           find . -iname "*.py" -maxdepth 1 | xargs pylint --fail-under=8 --disable="R0913, W0613, W0703"
-  
+ 
 # run code quality checks in parallel
   Unit-Testing:
     needs: [Test-Python-Script]
@@ -67,7 +67,16 @@ jobs:
         run: |
           # Run unittest
           python -m unittest "test.py"
-   
+  # run code quality checks in parallel
+  Safety-Check:
+      needs: [Unit-Testing]
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v2
+        - name: Security vulnerabilities scan
+          uses: aufdenpunkt/python-safety-check@master
+
   # package and deploy only if the testing and linting has been successful
   Zip-Package-To-S3:
     needs: [Test-Python-Script, Lint-main, Unit-Testing]
