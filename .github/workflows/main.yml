@@ -69,9 +69,12 @@ jobs:
           python -m unittest "test.py"
   # run code quality checks in parallel
   Safety-Check:
-      needs: [Unit-Testing]
+      needs: [Lint-main, Unit-Testing]
       runs-on: ubuntu-latest
-
+      
+      env:
+        DEP_PATH: src/requirements.txt
+        
       steps:
         - uses: actions/checkout@v2
         - name: Security vulnerabilities scan
@@ -79,7 +82,7 @@ jobs:
 
   # package and deploy only if the testing and linting has been successful
   Zip-Package-To-S3:
-    needs: [Test-Python-Script, Lint-main, Unit-Testing]
+    needs: [Test-Python-Script, Lint-main, Unit-Testing, Safety-Check]
     runs-on: ubuntu-latest
     
     steps:
