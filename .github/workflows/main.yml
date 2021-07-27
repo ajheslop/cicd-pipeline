@@ -73,7 +73,7 @@ jobs:
       runs-on: ubuntu-latest
       
       env:
-        DEP_PATH: requirements.txt
+        DEP_PATH: ./requirements.txt
         
       steps:
         - uses: actions/checkout@v2
