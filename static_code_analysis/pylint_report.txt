@@ -1,0 +1,5 @@
+PS C:\Users\aheslop\OneDrive - DXC Production\Desktop\startbootstrap-small-business-gh-pages\Assignment2\cicd-pipeline> pylint lambda_function.py
+
+------------------------------------
+Your code has been rated at 10.00/10
+
