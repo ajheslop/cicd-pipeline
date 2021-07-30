@@ -1,6 +1,6 @@
-""" Simple python function for testing out GitHub CI process """
+""" Basic Python script to push through the CI/CD Pipeline"""
 
 
 def basic_function():
-    """return string"""
+    """return a string of words, in this case, hello world"""
     return "hello world"
