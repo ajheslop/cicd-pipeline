@@ -8,6 +8,8 @@ class TestStringMethod(unittest.TestCase):
 
     def test_basic_function_fails(self):
         """ fail test"""
+        """ fail test"""
+        """ fail test"""
         self.assertNotEqual(basic_function(), ".")
 
     def test_basic_function_pass(self):
